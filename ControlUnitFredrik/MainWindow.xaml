@@ -1,0 +1,342 @@
+﻿<Window x:Class="ControlUnitFredrik.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ControlUnitFredrik.Utils"
+        xmlns:wpf="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="IoT Device Control" Height="450" Width="800">
+
+
+    <!-- Använd BitmapImage i en ImageBrush som bakgrund -->
+
+
+    <Window.Resources>
+
+        <BitmapImage x:Key="WebImage"
+                     UriSource="https://img.freepik.com/premium-photo/surreal-voyage-through-celestial-whispers-harmonic-radiance_941561-1702.jpg" />
+
+
+        <Style TargetType="Button" x:Key="SwitchButtonStyle1">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="IndianRed" />
+            <Setter Property="BorderBrush" Value="IndianRed" />
+            <Setter Property="BorderThickness" Value="4" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Height" Value="80" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                                Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                                CornerRadius="50">
+                            <!-- Justera CornerRadius efter önskad rundning -->
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Width" Value="85" />
+                                <Setter Property="Height" Value="85" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}"
+                                         Value="true">
+                                <Setter Property="Background" Value="Black" />
+                                <Setter Property="Foreground" Value="White" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}"
+                                         Value="false">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="SwitchButtonStyle2">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="PaleGreen" />
+            <Setter Property="BorderBrush" Value="PaleGreen" />
+            <Setter Property="BorderThickness" Value="4" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Height" Value="80" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                                Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                                CornerRadius="50">
+                            <!-- Justera CornerRadius efter önskad rundning -->
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Width" Value="85" />
+                                <Setter Property="Height" Value="85" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}"
+                                         Value="true">
+                                <Setter Property="Background" Value="Black" />
+                                <Setter Property="Foreground" Value="White" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}"
+                                         Value="false">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LampButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Width" Value="60" />
+            <Setter Property="Height" Value="60" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="50">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsOn}" Value="True">
+                    <Setter Property="Background" Value="PaleGreen" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsOn}" Value="False">
+                    <Setter Property="Background" Value="IndianRed" />
+                </DataTrigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Width" Value="65" />
+                    <Setter Property="Height" Value="65" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <local:BoolToStatusConverter x:Key="BoolToStatusConverter" />
+    </Window.Resources>
+
+    <Window.Background>
+        <ImageBrush ImageSource="{StaticResource WebImage}" Stretch="UniformToFill" />
+    </Window.Background>
+
+    <Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <!-- Lampa 1 -->
+            <Button x:Name="buttonLampa1" Click="ToggleLamp_Click" Tag="Sovrum"
+                    Style="{StaticResource LampButtonStyle}" Background="IndianRed"
+                    Foreground="Black" Opacity="0.7">
+                <StackPanel>
+                    <wpf:FontAwesome Icon="LightbulbOutline" Foreground="Black" FontSize="24" />
+                    <TextBlock Text="Sovrum" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Button>
+
+            <!-- Lampa 2 -->
+            <Button x:Name="buttonLampa2" Click="ToggleLamp_Click" Tag="Kök"
+                    Style="{StaticResource LampButtonStyle}" Background="IndianRed"
+                    Foreground="Black" Opacity="0.7">
+                <StackPanel>
+                    <wpf:FontAwesome Icon="LightbulbOutline" Foreground="Black" FontSize="24" />
+                    <TextBlock Text="Kök" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Button>
+
+            <!-- Lampa 3 -->
+            <Button x:Name="buttonLampa3" Click="ToggleLamp_Click" Tag="Hall"
+                    Style="{StaticResource LampButtonStyle}" Background="IndianRed"
+                    Foreground="Black" Opacity="0.7">
+                <StackPanel>
+                    <wpf:FontAwesome Icon="LightbulbOutline" Foreground="Black" FontSize="24" />
+                    <TextBlock Text="Hall" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Button>
+
+            <!-- Släcka Alla -->
+            <Button Click="TurnAllOff_Click" Content="Släck Alla" Style="{StaticResource SwitchButtonStyle1}"
+                    Background="Black">
+
+                <Button.Opacity>1</Button.Opacity>
+            </Button>
+
+            <!-- Tänd Alla -->
+            <Button Click="TurnAllOn_Click" Content="Tänd Alla" Style="{StaticResource SwitchButtonStyle2}"
+                    Background="Black">
+
+                <Button.Opacity>1</Button.Opacity>
+            </Button>
+
+
+        </StackPanel>
+
+        <TextBlock x:Name="timeTextBlock" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"
+                   FontSize="30" FontWeight="Bold" Foreground="White" />
+        <TextBlock x:Name="dateTextBlock" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,50,20,10"
+                   FontSize="10" FontWeight="Bold" Foreground="White" />
+        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10" HorizontalAlignment="Right"
+                VerticalAlignment="Bottom" Padding="10" Margin="0,0,10,10"
+                Background="BlueViolet" Opacity="0.8">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <!-- Bilden -->
+                <Image x:Name="WeatherIconImage" Width="50" Height="50" />
+
+                <!-- TextBlock 1 -->
+                <TextBlock x:Name="CityTextBlock" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" />
+
+                <!-- TextBlock 2 -->
+                <TextBlock x:Name="TemperatureTextBlock" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" />
+
+                <!-- TextBlock 3 -->
+                <TextBlock x:Name="WeatherDescriptionTextBlock" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+
+        <Button x:Name="buttonCheckRegistration" Content="Kontrollera Enhetsregistrering"
+                Click="CheckDeviceRegistrationButton_Click"
+                VerticalAlignment="Bottom" Width="220" Height="50">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <!-- Standardstil för knappen -->
+                    <Setter Property="Background" Value="DarkGoldenrod" />
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="BorderThickness" Value="5" />
+                    <Setter Property="Padding" Value="10" />
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Width" Value="80" />
+                    <Setter Property="Height" Value="50" />
+                    <Setter Property="Cursor" Value="Arrow" />
+                    <!-- Standardmuspekare när musen inte sveper över knappen -->
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                                        Width="{TemplateBinding Width}"
+                                        Height="{TemplateBinding Height}" CornerRadius="5">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <!-- Lägg till en trigger för hover-effekten -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Goldenrod" />
+                                        <Setter Property="Cursor" Value="Hand" />
+                                    </Trigger>
+                                    <!-- Lägg till en trigger för klickhändelsen -->
+                                    <EventTrigger RoutedEvent="Button.Click">
+                                        <!-- Definiera en storyboard för klickanimationen -->
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                 To="0.5" Duration="0:0:0.1" />
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                 To="1" Duration="0:0:0.1"
+                                                                 BeginTime="0:0:0.1" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+
+
+        <ListBox Name="lampStatusListBox" HorizontalAlignment="Center" VerticalAlignment="top" Width="150" Height="66"
+                 Margin="0,20" BorderBrush="Black" BorderThickness="5">
+            <ListBox.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0" Color="LightSalmon" />
+                    <GradientStop Offset="1" Color="Gray" />
+                </LinearGradientBrush>
+            </ListBox.Background>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <!-- Ändra bredden till * för att centrera kolumnen -->
+                            <ColumnDefinition Width="*" />
+                            <!-- Ändra bredden till * för att centrera kolumnen -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Första kolumnen: LampName -->
+                        <TextBlock Text="{Binding LampName}" FontWeight="Bold" Margin="10" Padding="5"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                        <!-- Andra kolumnen: IsOn -->
+                        <TextBlock Text="{Binding IsOn, Converter={StaticResource BoolToStatusConverter}}"
+                                   Grid.Column="1" HorizontalAlignment="Center" Margin="10" Padding="5"
+                                   TextAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border BorderBrush="Black" BorderThickness="2,1,2,1" Background="MediumVioletRed">
+                                    <ContentPresenter />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="Black" />
+                                        <Setter Property="Foreground" Value="DodgerBlue" />
+                                        <Setter Property="BorderBrush" Value="DarkGray" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+        <ListBox Name="deviceListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="135" Height="42"
+                 Margin="15"
+                 ItemsSource="{Binding DeviceInfo}" BorderBrush="Black" BorderThickness="2"
+                 Background="MediumVioletRed">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding DeviceId}" FontWeight="Bold" Foreground="Black"
+                                   Background="Chocolate" />
+                        <TextBlock Text="{Binding Status}" Foreground="Black" Background="Chocolate" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
